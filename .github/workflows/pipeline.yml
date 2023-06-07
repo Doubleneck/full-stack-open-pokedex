@@ -35,7 +35,14 @@ jobs:
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: error
-          details: Build failed! ${{ github.event.commits[0].url }} by ${{ github.event.commits[0].committer.username }}
+          details: "Build failed! ${{ github.sha }} by ${{ github.actor }}"
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}    
+      - name: Pre check failure
+        if: failure()
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: error
+          details: "Build failed! ${{ github.sha }} by ${{ github.actor }}"
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}      
           
   deploy:    
