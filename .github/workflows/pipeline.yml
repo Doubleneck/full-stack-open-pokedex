@@ -42,7 +42,8 @@ jobs:
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: error
-          details: "Build failed! ${{ github.sha }} by ${{ github.actor }}"
+          text: Build failed!
+          details: "Build failed with commit ${{ github.sha }} by ${{ github.actor }}"
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}      
           
   deploy:    
@@ -62,6 +63,7 @@ jobs:
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: info
+          text: A new version of pokedex available!
           details: New commit ${{ github.event.commits[0].url }} by ${{ github.event.commits[0].committer.username }}
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}      
       
