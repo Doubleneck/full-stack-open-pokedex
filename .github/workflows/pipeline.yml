@@ -29,14 +29,7 @@ jobs:
         with:
           command: npm run test:e2e
           start: npm run start-prod
-          wait-on: http://localhost:5000
-      - name: Pre check failure
-        if: failure()
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          severity: error
-          details: "Build failed! ${{ github.sha }} by ${{ github.actor }}"
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}    
+          wait-on: http://localhost:5000    
       - name: Pre check failure
         if: failure()
         uses: rjstone/discord-webhook-notify@v1
