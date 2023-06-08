@@ -29,21 +29,7 @@ jobs:
         with:
           command: npm run test:e2e
           start: npm run start-prod
-          wait-on: http://localhost:5000
-      - name: Pre check failure
-        if: failure()
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          severity: error
-          details: "Build failed! ${{ github.sha }} by ${{ github.actor }}"
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}    
-      - name: Pre check failure
-        if: failure()
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          severity: error
-          details: "Build failed! ${{ github.sha }} by ${{ github.actor }}"
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}      
+          wait-on: http://localhost:5000     
           
   deploy:    
     needs: [simple_deployment_pipeline]
@@ -56,14 +42,7 @@ jobs:
       - run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          
-      - name: Deploy Success
-        if: success() 
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          severity: info
-          details: New commit ${{ github.event.commits[0].url }} by ${{ github.event.commits[0].committer.username }}
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}      
+            
       
   tag_release:
     needs: [deploy]
